@@ -1,18 +1,27 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-#define _GNU_SOURCE		1
-#define UNUSED(x)		((void) (x))
-
-/*these are the header files embedded with certain built_in utilities for executions*/
+/*THESE ARE HEADER FILES */
 
 #include <stdio.h>
+/*the standard for the header for malloc*/
 #include <stdlib.h>
+/*the header files for string manipulations*/
 #include <string.h>
-#include <stdarg.h>
-#include <ctype.h>
+/* the header files unix like operations*/
 #include <unistd.h>
-
+/* this deals with the systems*/
+#include <sys/types.h>
+/*this header deals with files information and files status*/
+#include <sys/stat.h>
+/*this deals with files controlability*/
+#include <fcntl.h>
+/*this deals with the sybolic constant or name max lenght*/
+#define MAX_LENGTH 40000
+/* the true or false header */
+#include <stdbool.h>
+/**/
+#define div my_div
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -24,10 +33,11 @@
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
+
 
 /**
  * struct instruction_s - opcode and its function
@@ -42,82 +52,28 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-
-typedef enum { STACK_MODE, QUEUE_MODE } Mode_t;
-
-typedef struct
-{
-	FILE *fp;
-	char *buffer;
-	char **Bytecodes;
-	size_t size;
-	Mode_t Mode;
-	size_t line_number;
-} InputBuffer;
-extern InputBuffer Input;
-
-typedef enum
-{
-	PREPARE_BYTECODE_SUCCESS,
-	PREPARE_BYTECODE_FAILURE
-} PrepareResult;
-
-typedef enum { FALSE, TRUE } Boolean;
-
-/*typedef struct readline
-{
-	InputBuffer Buffer;
-	char **Bytecodes;
-	Mode_t Mode;
-} ReadLine;
-extern ReadLine *Input;
-*/
-
-/* ReadLine *InitializeInput(void); */
-/* InputBuffer MakeNewBuffer(void); */
-PrepareResult PrepareBytecode(void);
-void ExecuteOpcode(stack_t **head, unsigned int line_number);
-void FreeBytecodes(void);
-void ErrExit(stack_t *stack, const char *format, ...);
-
-int getTop(stack_t *stack);
-void FreeStack(stack_t *stack);
-size_t stackLen(const stack_t *stack);
-Boolean isEmpty(stack_t *stack);
-Boolean isNum(const char *s);
-char **strtow(char *s);
-size_t strchr_no(const char *s, int ch);
-
-/* Instruction functions */
-void Add(stack_t **stack, unsigned int line_number);
-/*first instruction for the fucntions */
+char *_strdup(char *str);
+void cmd_caller(char *cmd, unsigned int line, stack_t **top);
+stack_t *create_node(int n);
+void push(stack_t **top, unsigned int line_number);
+void pall(stack_t **top, unsigned int line_number);
+void free_all(stack_t **head);
+ssize_t intial_check(int argc, char **argv);
+void check_malloc(void);
+void pint(stack_t **stack, unsigned int line);
+void pop(stack_t **stack, unsigned int line);
+int is_empty(stack_t *stack);
+void swap(stack_t **stack, unsigned int line);
+void rotr(stack_t **stack, unsigned int line_number);
+void rotl(stack_t **stack, unsigned int line_number);
+void pstr(stack_t **stack, unsigned int line_number);
+void pchar(stack_t **stack, unsigned int line_number);
+void mod(stack_t **stack, unsigned int line_number);
+void mul(stack_t **stack, unsigned int line_number);
+void div(stack_t **stack, unsigned int line_number);
+void sub(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
-void Pop(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
+bool is_digit(const char *value);
 
-/*the push prototype fuction adding data elments */
-void Push(stack_t **stack, unsigned int line_number);
-void Pall(stack_t **stack, unsigned int line_number);
-void Pint(stack_t **stack, unsigned int line_number);
-void Pop(stack_t **stack, unsigned int line_number);
-void Swap(stack_t **stack, unsigned int line_number);
-void Sub(stack_t **stack, unsigned int line_number);
-void Mul(stack_t **stack, unsigned int line_number);
-void Div(stack_t **stack, unsigned int line_number);
-void Mod(stack_t **stack, unsigned int line_number);
-void Pchar(stack_t **stack, unsigned int line_number);
-void Pstr(stack_t **stack, unsigned int line_number);
-void Rotl(stack_t **stack, unsigned int line_number);
-void Rotr(stack_t **stack, unsigned int line_number);
-void Stack(stack_t **stack, unsigned int line_number);
-void Queue(stack_t **stack, unsigned int line_number);
-
-/* Stacks and Queues Operations*/
-stack_t *fpush(stack_t **stack, int num);
-void print_stack(const stack_t *stack);
-int fpop(stack_t **stack);
-stack_t *enqueue(stack_t **stack, int num);
-void fswap(stack_t **stack);
-void print_stack_str(const stack_t *stack);
-int lpop(stack_t **stack);
-
-#endif /* monty.h */
+#endif /* MONTY_H */
