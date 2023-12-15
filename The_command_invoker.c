@@ -9,11 +9,11 @@
  */
 void cmd_caller(char *cmd, unsigned int line, stack_t **top)
 {
-	int idx = 0;
+	int index_checker = 0;
 
 	instruction_t call[] = {
-		{"push", push},
-		{"pall", pall},
+		{"push", push},/*the various instruction*/
+		{"pall", pall},/*we are writing interpreter for*/
 		{"pint", pint},
 		{"pop", pop},
 		{"swap", swap},
@@ -32,11 +32,11 @@ void cmd_caller(char *cmd, unsigned int line, stack_t **top)
 
 	if (cmd[0] == '#')
 		return;
-	for (idx = 0; call[idx].opcode != NULL; idx++)
+	for (index_checker = 0; call[index_checker].opcode != NULL; index_checker++)
 	{
-		if (strcmp(call[idx].opcode, cmd) == 0)
+		if (strcmp(call[index_checker].opcode, cmd) == 0)
 		{
-			call[idx].f(top, line);
+			call[index_checker].f(top, line);
 			return;
 		}
 	}
