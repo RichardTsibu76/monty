@@ -34,10 +34,10 @@ int main(int argc, char **argv)
 			strncpy(copy_buffer, buffer, j);
 			copy_buffer[j] = '\0';
 			line++;
-			comd = strtok(copy_buffer, " \t");
+			comd = strtok(copy_buffer, " \t");/*The part of tokenization*/
 			if (comd)
 				cmd_caller(comd, line, &top);
-			free(copy_buffer);
+			free(copy_buffer);/*freeing the buffer copy */
 			read_to_left = read_checkb - (i + 1);
 			read_checkb = read_to_left;
 			memmove(buffer, buffer + i + 1, read_checkb);
